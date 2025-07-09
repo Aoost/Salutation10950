@@ -7,61 +7,294 @@
     <style>
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #000;
-            color: #00ff00;
+            color: #00ff41;
             font-family: 'Courier New', monospace;
-            overflow-x: auto;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
         
-        .ascii-container {
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .typewriter-container {
             white-space: pre;
-            font-size: 8px;
-            line-height: 1.0;
-            letter-spacing: 0;
-            word-spacing: 0;
-            overflow-x: auto;
-            width: 100%;
+            font-size: 12px;
+            line-height: 1.4;
+            letter-spacing: 1px;
+            text-align: center;
+            max-width: 90vw;
         }
         
-        .title {
-            text-align: center;
-            color: #ff69b4;
-            margin-bottom: 20px;
+        .later-sections {
+            text-align: left;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding-top: 50px;
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+            color: #00ff41;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .typewriter-text {
+            color: #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+            font-size: 14px;
+        }
+        
+        .typewriter-text.poem {
             font-size: 16px;
         }
         
-        /* Ensure proper scrolling for wide ASCII art */
-        html {
-            overflow-x: auto;
+        .typewriter-text.heading {
+            font-size: 10px;
+            text-align: left;
+        }
+        
+        .typewriter-text.birthday {
+            font-size: 8px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        /* Subtle glow effect */
+        .glow {
+            text-shadow: 
+                0 0 5px #00ff41,
+                0 0 10px #00ff41,
+                0 0 15px #00ff41;
+        }
+        
+        /* Continue button styling */
+        .continue-button {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid white;
+            color: #00ff41;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        .continue-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="title">
-
+    <!-- Section 1: Saturn Poem -->
+    <div class="section" id="poemSection">
+        <div class="typewriter-container">
+            <div class="typewriter-text poem" id="typewriter"></div>
+            <span class="cursor" id="cursor">_</span>
+        </div>
+        <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
     </div>
-    
-    <div class="ascii-container" id="asciiArt">Loading your beautiful ASCII art...</div>
+
+    <!-- Section 2: Cristina Heading -->
+    <div class="section later-sections" id="headingSection">
+        <div class="typewriter-container">
+            <div class="typewriter-text heading" id="headingText"></div>
+        </div>
+    </div>
+
+    <!-- Section 3: Birthday Text -->
+    <div class="section later-sections" id="birthdaySection">
+        <div class="typewriter-container">
+            <div class="typewriter-text birthday" id="birthdayText"></div>
+        </div>
+    </div>
 
     <script>
-        // Load ASCII art content directly
-        async function loadAsciiArt() {
-            try {
-                const response = await fetch('./BirthdayASCII.txt');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.text();
-                document.getElementById('asciiArt').textContent = data;
-            } catch (error) {
-                console.log('Fetch failed, using embedded fallback');
-                // If fetch fails, we'll embed the content directly
-                document.getElementById('asciiArt').innerHTML = 'Please ensure BirthdayASCII.txt is in the same directory as this HTML file.';
+        const saturnText = `Alchemical process:
+
+continual commitment of spirit.
+
+You find yourself working in ever broadening spirals.
+                        
+The fruit of your love and attention:
+                                                                                                       		
+reciprocal reverberation - ripples of karma 
+                                                                                                      	
+like  celestial rings holding asteroids in check,
+                                                                                                             
+                                                                                                       
+and
+																															
+Keeping little siblings in their Milky lanes -
+																		
+protected
+from cosmic debris. 				
+
+cyclical labour of sphere and psyche
+										
+sure 
+and 
+                                 
+slow 
+                                 
+selves are sloughed 
+												
+and mountains cracked.
+                    
+A nuclear dance - a quantum song
+                    
+with the sun,
+God.        `;
+
+        const cristinaHeading = `                                                                                                                                                                                                                                                                                                                                                                                          
+
+
+										 |██████ ██████  ██ ███████ ████████ ██ ███    ██  █████     ██	 
+										|██      ██   ██ ██ ██         ██    ██ ████   ██ ██   ██    ██
+										|██      ██████  ██ ███████    ██    ██ ██ ██  ██ ███████    ██
+										|██      ██   ██ ██      ██    ██    ██ ██  ██ ██ ██   ██ 
+										 |██████ ██   ██ ██ ███████    ██    ██ ██   ████ ██   ██    ██	
+
+
+                                                                
+							
+
+
+`;
+
+        const birthdayText = 
+        
+                                `
+                                .xnnx.  .xx.                                .8u                                .x~~"*Weu.       .n~~%x.                 .=*8888x <"?88h.               . uW8"        ..          
+							 .f\`\`"888X< \`888.         u.      x.    .     m888R-    .u    .                  d8Nu.  9888c    x88X   888.              X>  '8888H> '8888               \`t888        @L           
+							 8L   8888X  8888   ...ue888b   .@88k  z88u    98P    .d88B :@8c       .u        88888  98888   X888X   8888L            '88h. \`8888   8888         u      8888   .   9888i   .dL  
+							X88h. \`8888  X888k  888R Y888r ~"8888 ^8888    ^8    ="8888f8888r   ud8888.      "***"  9888%  X8888X   88888            '8888 '8888    "88>     us888u.   9888.z88N  \`Y888k:*888. 
+							'8888 '8888  X8888  888R I888>   8888  888R    J"      4888>'88"  :888'8888.          ..@8*"   88888X   88888X            \`888 '8888.xH888x.  .@88 "8888"  9888  888E   888E  888I 
+							 \`*88>'8888  X8888  888R I888>   8888  888R   +"       4888> '    d888 '88%"       \`\`\`\`"8Weu   88888X   88888X              X" :88*~  \`*8888> 9888  9888   9888  888E   888E  888I 
+							   \`! X888~  X8888  888R I888>   8888  888R            4888>      8888.+"         ..    ?8888L 88888X   88888f            ~"   !"\`      "888> 9888  9888   9888  888E   888E  888I 
+							  -\`  X*"    X8888 u8888cJ888    8888 ,888B .         .d888L .+   8888L         :@88N   '8888N 48888X   88888    .         .H8888h.      ?88  9888  9888   9888  888E   888E  888I 
+							   xH88hx  . X8888  "*888*P"    "8888Y 8888"          ^"8888*"    '8888c. .+    *8888~  '8888F  ?888X   8888"   z8k       :"^"88888h.    '!   9888  9888  .8888  888"  x888N><888' 
+							 .*"*88888~  X888X    'Y"        \`Y"   'YP               "Y"       "88888%      '*8"\`   9888%    "88X   88*\`   %888*"     ^    "88888hx.+"    "888*""888"  \`%888*%"     "88"  888  
+							 \`    "8%    X888>                                                   "YP'         \`~===*%"\`        ^"==="\`      ?8F              ^"**""        ^Y"   ^Y'      "\`              88F  
+							    .x..     888f                                                                                               .8                                                           98"   
+							   88888    :88f                                                                                                d"                                                         ./"     
+							   "88*"  .x8*~                                                                                                ~                                                          ~\`       `;
+
+        const typewriter = document.getElementById('typewriter');
+        const cursor = document.getElementById('cursor');
+        const continueBtn = document.getElementById('continueBtn');
+        const headingText = document.getElementById('headingText');
+        const birthdayDiv = document.getElementById('birthdayText');
+        
+        let currentPhase = 'saturn';
+        let i = 0;
+        const speed = 25; // Very fast typing speed for Saturn poem
+        
+        function typeSaturnChar() {
+            if (i < saturnText.length) {
+                typewriter.textContent += saturnText.charAt(i);
+                i++;
+                setTimeout(typeSaturnChar, speed);
+            } else {
+                // Saturn poem complete, show continue button
+                setTimeout(showContinueButton, 1000);
             }
         }
         
-        loadAsciiArt();
+        function showContinueButton() {
+            cursor.style.display = 'none';
+            continueBtn.style.display = 'block';
+            // Add click event listener to button
+            continueBtn.addEventListener('click', function() {
+                continueBtn.style.display = 'none';
+                // Scroll to heading section
+                document.getElementById('headingSection').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                setTimeout(startCristinaFlash, 1000);
+            });
+        }
+        
+        function startCristinaFlash() {
+            currentPhase = 'cristina';
+            headingText.style.color = 'white';
+            headingText.style.textShadow = 'none';
+            
+            let flashCount = 0;
+            const maxFlashes = 8; // Flash 4 times (on/off = 2 states per flash)
+            
+            function flash() {
+                if (flashCount < maxFlashes) {
+                    if (flashCount % 2 === 0) {
+                        headingText.textContent = cristinaHeading;
+                    } else {
+                        headingText.textContent = '';
+                    }
+                    flashCount++;
+                    setTimeout(flash, 500); // Flash every 500ms
+                } else {
+                    // Keep heading visible, then scroll to birthday section and start birthday text
+                    headingText.textContent = cristinaHeading;
+                    setTimeout(() => {
+                        document.getElementById('birthdaySection').scrollIntoView({ 
+                            behavior: 'smooth' 
+                        });
+                        setTimeout(startBirthdayText, 1000);
+                    }, 2000);
+                }
+            }
+            
+            flash();
+        }
+        
+        function startBirthdayText() {
+            currentPhase = 'birthday';
+            birthdayDiv.style.color = 'white';
+            birthdayDiv.style.textShadow = 'none';
+            
+            const lines = birthdayText.split('\n');
+            let lineIndex = 0;
+            
+            function typeLine() {
+                if (lineIndex < lines.length) {
+                    if (lineIndex > 0) {
+                        birthdayDiv.textContent += '\n';
+                    }
+                    birthdayDiv.textContent += lines[lineIndex];
+                    lineIndex++;
+                    setTimeout(typeLine, 200); // 200ms between lines
+                }
+            }
+            
+            typeLine();
+        }
+        
+        // Start the sequence after a brief pause
+        setTimeout(() => {
+            typeSaturnChar();
+        }, 1000);
     </script>
 </body>
 </html> 
