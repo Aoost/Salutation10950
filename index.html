@@ -11,17 +11,37 @@
             background-color: #000;
             color: #00ff41;
             font-family: 'Courier New', monospace;
-            overflow-x: hidden;
-            min-height: 100vh;
+            overflow: hidden;
+            height: 100vh;
         }
         
         .section {
-            min-height: 100vh;
+            position: absolute;
+            width: 100%;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
+            top: 0;
+            left: 0;
+            transition: transform 0.8s ease-in-out;
+        }
+        
+        #poemSection {
+            transform: translateY(0);
+        }
+        
+        #poemSection.slide-up {
+            transform: translateY(-100vh);
+        }
+        
+        #headingSection {
+            transform: translateY(100vh);
+        }
+        
+        #headingSection.active {
+            transform: translateY(0);
         }
         
         .typewriter-container {
@@ -37,7 +57,12 @@
             text-align: left;
             align-items: flex-start;
             justify-content: flex-start;
-            padding-top: 50px;
+            padding: 20px;
+        }
+        
+        .later-sections .typewriter-container {
+            width: 100%;
+            max-width: none;
         }
         
         .cursor {
@@ -67,6 +92,12 @@
         
         .typewriter-text.birthday {
             font-size: 8px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .typewriter-text.python {
+            font-size: 6px;
             text-align: left;
             margin-top: 20px;
         }
@@ -117,17 +148,12 @@
         <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
     </div>
 
-    <!-- Section 2: Cristina Heading -->
+    <!-- Section 2: Cristina Heading & Birthday Text -->
     <div class="section later-sections" id="headingSection">
         <div class="typewriter-container">
             <div class="typewriter-text heading" id="headingText"></div>
-        </div>
-    </div>
-
-    <!-- Section 3: Birthday Text -->
-    <div class="section later-sections" id="birthdaySection">
-        <div class="typewriter-container">
-            <div class="typewriter-text birthday" id="birthdayText"></div>
+            <div class="typewriter-text birthday" id="birthdayText" style="margin-top: 20px;"></div>
+            <div class="typewriter-text python" id="pythonText" style="margin-top: 20px;"></div>
         </div>
     </div>
 
@@ -165,8 +191,7 @@ and mountains cracked.
                     
 A nuclear dance - a quantum song
                     
-with the sun,
-God.        `;
+with the sun.   `;
 
         const cristinaHeading = `                                                                                                                                                                                                                                                                                                                                                                                          
 
@@ -184,9 +209,8 @@ God.        `;
 
 `;
 
-        const birthdayText = 
-        
-                                `
+        const birthdayText = `,
+        m
                                 .xnnx.  .xx.                                .8u                                .x~~"*Weu.       .n~~%x.                 .=*8888x <"?88h.               . uW8"        ..          
 							 .f\`\`"888X< \`888.         u.      x.    .     m888R-    .u    .                  d8Nu.  9888c    x88X   888.              X>  '8888H> '8888               \`t888        @L           
 							 8L   8888X  8888   ...ue888b   .@88k  z88u    98P    .d88B :@8c       .u        88888  98888   X888X   8888L            '88h. \`8888   8888         u      8888   .   9888i   .dL  
@@ -200,7 +224,8 @@ God.        `;
 							 \`    "8%    X888>                                                   "YP'         \`~===*%"\`        ^"==="\`      ?8F              ^"**""        ^Y"   ^Y'      "\`              88F  
 							    .x..     888f                                                                                               .8                                                           98"   
 							   88888    :88f                                                                                                d"                                                         ./"     
-							   "88*"  .x8*~                                                                                                ~                                                          ~\`       `;
+							   "88*"  .x8*~                                                                                                ~                                                          ~\`       
+                               `;
 
         const typewriter = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
@@ -229,11 +254,11 @@ God.        `;
             // Add click event listener to button
             continueBtn.addEventListener('click', function() {
                 continueBtn.style.display = 'none';
-                // Scroll to heading section
-                document.getElementById('headingSection').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
-                setTimeout(startCristinaFlash, 1000);
+                // Slide the poem section up and out of view
+                document.getElementById('poemSection').classList.add('slide-up');
+                // Animate to heading section
+                document.getElementById('headingSection').classList.add('active');
+                setTimeout(startCristinaFlash, 800);
             });
         }
         
@@ -255,14 +280,9 @@ God.        `;
                     flashCount++;
                     setTimeout(flash, 500); // Flash every 500ms
                 } else {
-                    // Keep heading visible, then scroll to birthday section and start birthday text
+                    // Keep heading visible, then start birthday text directly below
                     headingText.textContent = cristinaHeading;
-                    setTimeout(() => {
-                        document.getElementById('birthdaySection').scrollIntoView({ 
-                            behavior: 'smooth' 
-                        });
-                        setTimeout(startBirthdayText, 1000);
-                    }, 2000);
+                    setTimeout(startBirthdayText, 2000);
                 }
             }
             
@@ -291,10 +311,8 @@ God.        `;
             typeLine();
         }
         
-        // Start the sequence after a brief pause
-        setTimeout(() => {
-            typeSaturnChar();
-        }, 1000);
+        // Start the sequence immediately when page loads
+        typeSaturnChar();
     </script>
 </body>
 </html> 
