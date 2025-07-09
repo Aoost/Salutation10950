@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Cristina! 🎉</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .ascii-container {
+            white-space: pre;
+            font-size: 8px;
+            line-height: 1.0;
+            letter-spacing: 0;
+            word-spacing: 0;
+            overflow-x: auto;
+            width: 100%;
+        }
+        
+        .title {
+            text-align: center;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        /* Ensure proper scrolling for wide ASCII art */
+        html {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+
+    </div>
+    
+    <div class="ascii-container" id="asciiArt">Loading your beautiful ASCII art...</div>
+
+    <script>
+        // Load ASCII art content directly
+        async function loadAsciiArt() {
+            try {
+                const response = await fetch('./BirthdayASCII.txt');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.text();
+                document.getElementById('asciiArt').textContent = data;
+            } catch (error) {
+                console.log('Fetch failed, using embedded fallback');
+                // If fetch fails, we'll embed the content directly
+                document.getElementById('asciiArt').innerHTML = 'Please ensure BirthdayASCII.txt is in the same directory as this HTML file.';
+            }
+        }
+        
+        loadAsciiArt();
+    </script>
+</body>
+</html> 
