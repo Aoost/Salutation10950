@@ -136,7 +136,7 @@
         }
         
         .typewriter-text.indras-net-art {
-            font-size: 0.55vw; /* Adjusted for better fit */
+            font-size: 0.75vw; /* Adjusted for better fit */
             color: white;
             text-shadow: none;
         }
@@ -234,6 +234,14 @@
         const birthdayDiv = document.getElementById('birthdayText');
         
         let currentPhase = 'saturn';
+        let activeSkippers = [];
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                // Make a copy as skipper() can modify the array during iteration
+                [...activeSkippers].forEach(skipper => skipper());
+            }
+        });
         
         /**
          * A reusable function to load ASCII art from a file and animate it.
@@ -267,6 +275,32 @@
                 cursor.style.display = 'inline';
             }
 
+            let timeoutId;
+            let completed = false;
+            let fullText = '';
+
+            const skipper = () => {
+                if (completed) return;
+                completed = true;
+                clearTimeout(timeoutId);
+
+                if (charAnimation === 'char') {
+                    typewriterElement.textContent = fullText;
+                } else {
+                    typewriterElement.innerHTML = fullText;
+                }
+
+                if (cursor) cursor.style.display = 'none';
+                if (onComplete) onComplete();
+                
+                const index = activeSkippers.indexOf(skipper);
+                if (index > -1) {
+                    activeSkippers.splice(index, 1);
+                }
+            };
+
+            activeSkippers.push(skipper);
+
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -275,21 +309,28 @@
                     return response.text();
                 })
                 .then(text => {
+                    fullText = text;
                     typewriterElement.style.whiteSpace = 'pre';
                     
                     if (charAnimation === 'char') {
                         let charIndex = 0;
                         function type() {
+                            if (completed) return;
                             if (charIndex < text.length) {
                                 typewriterElement.textContent += text.charAt(charIndex);
                                 if (autoScroll) {
                                     typewriterElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
                                 }
                                 charIndex++;
-                                setTimeout(type, charSpeed);
+                                timeoutId = setTimeout(type, charSpeed);
                             } else {
                                 if (cursor) cursor.style.display = 'none';
                                 if (onComplete) onComplete();
+                                completed = true;
+                                const index = activeSkippers.indexOf(skipper);
+                                if (index > -1) {
+                                    activeSkippers.splice(index, 1);
+                                }
                             }
                         }
                         type();
@@ -297,16 +338,22 @@
                         const lines = text.split('\n');
                         let lineIndex = 0;
                         function printLine() {
+                            if (completed) return;
                             if (lineIndex < lines.length) {
                                 typewriterElement.innerHTML += (lines[lineIndex] + '\n');
                                 if (autoScroll) {
                                     typewriterElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
                                 }
                                 lineIndex++;
-                                setTimeout(printLine, lineDelay);
+                                timeoutId = setTimeout(printLine, lineDelay);
                             } else {
                                 if (cursor) cursor.style.display = 'none';
                                 if (onComplete) onComplete();
+                                completed = true;
+                                const index = activeSkippers.indexOf(skipper);
+                                if (index > -1) {
+                                    activeSkippers.splice(index, 1);
+                                }
                             }
                         }
                         printLine();
@@ -331,19 +378,42 @@
                 const response = await fetch(filePath);
                 const text = await response.text();
                 
+                let timeoutId;
+                let completed = false;
+
+                const skipper = () => {
+                    if (completed) return;
+                    completed = true;
+                    clearTimeout(timeoutId);
+                    element.style.visibility = 'visible';
+                    element.innerHTML = text;
+                    if (onComplete) onComplete();
+                    const index = activeSkippers.indexOf(skipper);
+                    if (index > -1) {
+                        activeSkippers.splice(index, 1);
+                    }
+                };
+                activeSkippers.push(skipper);
+
                 let flashCount = 0;
                 const maxFlashes = times * 2; // on/off cycles
 
                 function flash() {
+                    if (completed) return;
                     if (flashCount < maxFlashes) {
                         element.style.visibility = (flashCount % 2 === 0) ? 'hidden' : 'visible';
                         if (flashCount === 1) element.innerHTML = text; // Set text on first visible flash
                         flashCount++;
-                        setTimeout(flash, 300);
+                        timeoutId = setTimeout(flash, 300);
                     } else {
+                        completed = true;
                         element.style.visibility = 'visible';
                         element.innerHTML = text; // Ensure it's visible at the end
                         if (onComplete) onComplete();
+                        const index = activeSkippers.indexOf(skipper);
+                        if (index > -1) {
+                            activeSkippers.splice(index, 1);
+                        }
                     }
                 }
                 flash();
@@ -371,7 +441,7 @@
         }
 
         function startCristinaFlash() {
-            flashAscii('headingText', 'AsciiPieces/Cristina Heading.txt', 3, startBirthdayText);
+            flashAscii('headingText', 'AsciiPieces/Cristina Heading.txt', 3, startLayeredArt);
         }
         
         function startBirthdayText() {
@@ -385,7 +455,7 @@
 
         function startLayeredArt() {
             // Hide previous sections and show the new one
-            document.getElementById('headingSection').style.display = 'none';
+            // document.getElementById('headingSection').style.display = 'none';
             const layeredArtSection = document.getElementById('layeredArtSection');
             layeredArtSection.style.display = 'flex'; // Make it visible
 
@@ -413,6 +483,7 @@
 
         // Initial call to start the animation
         document.addEventListener('DOMContentLoaded', (event) => {
+            window.scrollTo(0, 0);
             let animationsCompleted = 0;
             const totalAnimations = 2;
 

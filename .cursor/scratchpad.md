@@ -119,6 +119,13 @@ The project will be broken down into the following distinct stages. The Executor
     -   [x] **Task 8.2: Adjust Animation Speed.**
         -   **Action:** Slow down the line-by-line animation for Indra's Net to make it feel more like it's being printed. The `lineDelay` will be increased.
         -   **Success Criteria:** The animation speed for Indra's Net is visibly slower and more deliberate.
+-   [ ] **Phase 10: Fix Final Animation Sequence**
+    -   [ ] **Task 10.1: Correct the Animation Trigger.**
+        -   **Action:** Modify the `startBirthdayText` function. The `onComplete` callback that triggers the final python/layered art (`startLayeredArt`) should be present, but we need to find out why it was firing prematurely or with the wrong content.
+        -   **Success Criteria:** The "30yoBby" animation completes, and *then* the final `python.txt` animation begins, without any other art appearing incorrectly.
+    -   [ ] **Task 10.2: Ensure Final Art Renders Correctly.**
+        -   **Action:** Verify that the `startLayeredArt` function correctly loads `smolPython.txt` as a base and then animates `30yoBby.txt` over it as an overlay. This was the intended final effect.
+        -   **Success Criteria:** The final animation scene shows the small python art with the birthday message art layered on top.
 
 ## Executor's Feedback or Assistance Requests
 
