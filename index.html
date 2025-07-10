@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Cristina! 🎉</title>
+    <title>Sun Salutation 10950 </title>
     <style>
         body {
             margin: 0;
@@ -20,8 +20,8 @@
             width: 100%;
             height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: left;
+            justify-content: left;
             padding: 20px;
             top: 0;
             left: 0;
@@ -43,14 +43,64 @@
         #headingSection.active {
             transform: translateY(0);
         }
+
+        #layeredArtSection {
+            display: none; /* Hidden by default */
+            position: relative;
+        }
+
+        .layered-art-container {
+            position: relative;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+        }
+
+        .layered-art-container div {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #python-art {
+            font-size: 0.58vw; /* 7px base */
+        }
+
+        #bday-art-overlay {
+            font-size: 0.42vw; /* 5px base */
+            /* Initial positioning guess */
+            top: 50px; 
+            left: 150px;
+            color: white; /* Make it stand out */
+        }
+        
+        .side-by-side-container {
+            display: flex;
+            justify-content: space-between; /* Change to space-between */
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .poem-container {
+            flex-basis: 48%; /* Give slightly less than half */
+            padding-right: 2%;
+        }
+
+        .indras-net-container {
+            flex-basis: 48%; /* Give slightly less than half */
+            padding-left: 2%;
+        }
         
         .typewriter-container {
             white-space: pre;
-            font-size: 12px;
+            font-size: 1vw; /* 12px base */
             line-height: 1.4;
             letter-spacing: 1px;
-            text-align: center;
-            max-width: 90vw;
+            text-align: left;
+            max-width: 50%;
+        }
+
+        #poemSection .typewriter-container {
+            text-align: left;
         }
         
         .later-sections {
@@ -78,26 +128,32 @@
         .typewriter-text {
             color: #00ff41;
             text-shadow: 0 0 5px #00ff41;
-            font-size: 14px;
+            font-size: 1.17vw; /* 14px base */
         }
         
         .typewriter-text.poem {
-            font-size: 16px;
+            font-size: 14px; /* User preference */
+        }
+        
+        .typewriter-text.indras-net-art {
+            font-size: 0.55vw; /* Adjusted for better fit */
+            color: white;
+            text-shadow: none;
         }
         
         .typewriter-text.heading {
-            font-size: 10px;
+            font-size: 0.83vw; /* 10px base */
             text-align: left;
         }
         
         .typewriter-text.birthday {
-            font-size: 8px;
+            font-size: 0.67vw; /* 8px base */
             text-align: left;
             margin-top: 20px;
         }
         
         .typewriter-text.python {
-            font-size: 6px;
+            font-size: 0.5vw; /* 6px base */
             text-align: left;
             margin-top: 20px;
         }
@@ -116,8 +172,8 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: transparent;
             border: 1px solid white;
@@ -141,9 +197,14 @@
 <body>
     <!-- Section 1: Saturn Poem -->
     <div class="section" id="poemSection">
-        <div class="typewriter-container">
-            <div class="typewriter-text poem" id="typewriter"></div>
-            <span class="cursor" id="cursor">_</span>
+        <div class="side-by-side-container">
+            <div class="typewriter-container poem-container">
+                <div class="typewriter-text poem" id="typewriter"></div>
+                <span class="cursor" id="cursor">_</span>
+            </div>
+            <div class="typewriter-container indras-net-container">
+                <div class="typewriter-text indras-net-art" id="indras-net-art"></div>
+            </div>
         </div>
         <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
     </div>
@@ -157,76 +218,15 @@
         </div>
     </div>
 
+    <!-- Section 3: Layered ASCII Art -->
+    <div class="section later-sections" id="layeredArtSection">
+        <div class="layered-art-container">
+            <div id="python-art" class="python-base"></div>
+            <div id="bday-art-overlay" class="bday-overlay"></div>
+        </div>
+    </div>
+
     <script>
-        const saturnText = `Alchemical process:
-
-continual commitment of spirit.
-
-You find yourself working in ever broadening spirals.
-                        
-The fruit of your love and attention:
-                                                                                                       		
-reciprocal reverberation - ripples of karma 
-                                                                                                      	
-like  celestial rings holding asteroids in check,
-                                                                                                             
-                                                                                                       
-and
-																															
-Keeping little siblings in their Milky lanes -
-																		
-protected
-from cosmic debris. 				
-
-cyclical labour of sphere and psyche
-										
-sure 
-and 
-                                 
-slow 
-                                 
-selves are sloughed 
-												
-and mountains cracked.
-                    
-A nuclear dance - a quantum song
-                    
-with the sun.   `;
-
-        const cristinaHeading = `                                                                                                                                                                                                                                                                                                                                                                                          
-
-
-										 |██████ ██████  ██ ███████ ████████ ██ ███    ██  █████     ██	 
-										|██      ██   ██ ██ ██         ██    ██ ████   ██ ██   ██    ██
-										|██      ██████  ██ ███████    ██    ██ ██ ██  ██ ███████    ██
-										|██      ██   ██ ██      ██    ██    ██ ██  ██ ██ ██   ██ 
-										 |██████ ██   ██ ██ ███████    ██    ██ ██   ████ ██   ██    ██	
-
-
-                                                                
-							
-
-
-`;
-
-        const birthdayText = `,
-        m
-                                .xnnx.  .xx.                                .8u                                .x~~"*Weu.       .n~~%x.                 .=*8888x <"?88h.               . uW8"        ..          
-							 .f\`\`"888X< \`888.         u.      x.    .     m888R-    .u    .                  d8Nu.  9888c    x88X   888.              X>  '8888H> '8888               \`t888        @L           
-							 8L   8888X  8888   ...ue888b   .@88k  z88u    98P    .d88B :@8c       .u        88888  98888   X888X   8888L            '88h. \`8888   8888         u      8888   .   9888i   .dL  
-							X88h. \`8888  X888k  888R Y888r ~"8888 ^8888    ^8    ="8888f8888r   ud8888.      "***"  9888%  X8888X   88888            '8888 '8888    "88>     us888u.   9888.z88N  \`Y888k:*888. 
-							'8888 '8888  X8888  888R I888>   8888  888R    J"      4888>'88"  :888'8888.          ..@8*"   88888X   88888X            \`888 '8888.xH888x.  .@88 "8888"  9888  888E   888E  888I 
-							 \`*88>'8888  X8888  888R I888>   8888  888R   +"       4888> '    d888 '88%"       \`\`\`\`"8Weu   88888X   88888X              X" :88*~  \`*8888> 9888  9888   9888  888E   888E  888I 
-							   \`! X888~  X8888  888R I888>   8888  888R            4888>      8888.+"         ..    ?8888L 88888X   88888f            ~"   !"\`      "888> 9888  9888   9888  888E   888E  888I 
-							  -\`  X*"    X8888 u8888cJ888    8888 ,888B .         .d888L .+   8888L         :@88N   '8888N 48888X   88888    .         .H8888h.      ?88  9888  9888   9888  888E   888E  888I 
-							   xH88hx  . X8888  "*888*P"    "8888Y 8888"          ^"8888*"    '8888c. .+    *8888~  '8888F  ?888X   8888"   z8k       :"^"88888h.    '!   9888  9888  .8888  888"  x888N><888' 
-							 .*"*88888~  X888X    'Y"        \`Y"   'YP               "Y"       "88888%      '*8"\`   9888%    "88X   88*\`   %888*"     ^    "88888hx.+"    "888*""888"  \`%888*%"     "88"  888  
-							 \`    "8%    X888>                                                   "YP'         \`~===*%"\`        ^"==="\`      ?8F              ^"**""        ^Y"   ^Y'      "\`              88F  
-							    .x..     888f                                                                                               .8                                                           98"   
-							   88888    :88f                                                                                                d"                                                         ./"     
-							   "88*"  .x8*~                                                                                                ~                                                          ~\`       
-                               `;
-
         const typewriter = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
         const continueBtn = document.getElementById('continueBtn');
@@ -234,17 +234,122 @@ with the sun.   `;
         const birthdayDiv = document.getElementById('birthdayText');
         
         let currentPhase = 'saturn';
-        let i = 0;
-        const speed = 25; // Very fast typing speed for Saturn poem
         
-        function typeSaturnChar() {
-            if (i < saturnText.length) {
-                typewriter.textContent += saturnText.charAt(i);
-                i++;
-                setTimeout(typeSaturnChar, speed);
-            } else {
-                // Saturn poem complete, show continue button
-                setTimeout(showContinueButton, 1000);
+        /**
+         * A reusable function to load ASCII art from a file and animate it.
+         * @param {string} filePath - The path to the ASCII art text file.
+         * @param {string} elementId - The ID of the element to display the art in.
+         * @param {object} options - Configuration options.
+         * @param {number} [options.lineDelay=200] - Delay between printing each line.
+         * @param {boolean} [options.autoScroll=false] - Whether to scroll the view as content is added.
+         * @param {string} [options.charAnimation='line'] - 'line' for line-by-line, 'char' for char-by-char.
+         * @param {number} [options.charSpeed=25] - Speed for character-by-character animation.
+         * @param {function} [options.onComplete=null] - Callback function when animation is done.
+         */
+        function loadAndAnimateAscii(url, elementId, options = {}) {
+            const {
+                charAnimation = 'line',
+                charSpeed = 25,
+                lineDelay = 200,
+                onComplete,
+                autoScroll = false
+            } = options;
+            
+            const typewriterElement = document.getElementById(elementId);
+            if (!typewriterElement) {
+                console.error(`Element with ID "${elementId}" not found.`);
+                return;
+            }
+            
+            const cursor = typewriterElement.parentElement.querySelector('.cursor');
+
+            if (cursor) {
+                cursor.style.display = 'inline';
+            }
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    typewriterElement.style.whiteSpace = 'pre';
+                    
+                    if (charAnimation === 'char') {
+                        let charIndex = 0;
+                        function type() {
+                            if (charIndex < text.length) {
+                                typewriterElement.textContent += text.charAt(charIndex);
+                                if (autoScroll) {
+                                    typewriterElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                                }
+                                charIndex++;
+                                setTimeout(type, charSpeed);
+                            } else {
+                                if (cursor) cursor.style.display = 'none';
+                                if (onComplete) onComplete();
+                            }
+                        }
+                        type();
+                    } else { // line-by-line
+                        const lines = text.split('\n');
+                        let lineIndex = 0;
+                        function printLine() {
+                            if (lineIndex < lines.length) {
+                                typewriterElement.innerHTML += (lines[lineIndex] + '\n');
+                                if (autoScroll) {
+                                    typewriterElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                                }
+                                lineIndex++;
+                                setTimeout(printLine, lineDelay);
+                            } else {
+                                if (cursor) cursor.style.display = 'none';
+                                if (onComplete) onComplete();
+                            }
+                        }
+                        printLine();
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error loading ASCII from ${url}:`, error);
+                    typewriterElement.textContent = `Error: Could not load content from ${url}.`;
+                });
+        }
+
+        /**
+         * Loads ASCII art and flashes it on the screen.
+         * @param {string} elementId - The ID of the element to display the art in.
+         * @param {string} filePath - The path to the ASCII art text file.
+         * @param {number} times - How many times to flash.
+         * @param {function} onComplete - Callback function when animation is done.
+         */
+        async function flashAscii(elementId, filePath, times, onComplete) {
+            const element = document.getElementById(elementId);
+            try {
+                const response = await fetch(filePath);
+                const text = await response.text();
+                
+                let flashCount = 0;
+                const maxFlashes = times * 2; // on/off cycles
+
+                function flash() {
+                    if (flashCount < maxFlashes) {
+                        element.style.visibility = (flashCount % 2 === 0) ? 'hidden' : 'visible';
+                        if (flashCount === 1) element.innerHTML = text; // Set text on first visible flash
+                        flashCount++;
+                        setTimeout(flash, 300);
+                    } else {
+                        element.style.visibility = 'visible';
+                        element.innerHTML = text; // Ensure it's visible at the end
+                        if (onComplete) onComplete();
+                    }
+                }
+                flash();
+            } catch (error) {
+                console.error(`Error loading or flashing ASCII art from ${filePath}:`, error);
+                element.textContent = `Error: Could not load content from ${filePath}.`;
             }
         }
         
@@ -256,63 +361,81 @@ with the sun.   `;
                 continueBtn.style.display = 'none';
                 // Slide the poem section up and out of view
                 document.getElementById('poemSection').classList.add('slide-up');
+                
                 // Animate to heading section
-                document.getElementById('headingSection').classList.add('active');
-                setTimeout(startCristinaFlash, 800);
+                setTimeout(() => {
+                    document.getElementById('headingSection').classList.add('active');
+                    startCristinaFlash();
+                }, 800); // Wait for slide up transition to finish
             });
         }
-        
+
         function startCristinaFlash() {
-            currentPhase = 'cristina';
-            headingText.style.color = 'white';
-            headingText.style.textShadow = 'none';
-            
-            let flashCount = 0;
-            const maxFlashes = 8; // Flash 4 times (on/off = 2 states per flash)
-            
-            function flash() {
-                if (flashCount < maxFlashes) {
-                    if (flashCount % 2 === 0) {
-                        headingText.textContent = cristinaHeading;
-                    } else {
-                        headingText.textContent = '';
-                    }
-                    flashCount++;
-                    setTimeout(flash, 500); // Flash every 500ms
-                } else {
-                    // Keep heading visible, then start birthday text directly below
-                    headingText.textContent = cristinaHeading;
-                    setTimeout(startBirthdayText, 2000);
-                }
-            }
-            
-            flash();
+            flashAscii('headingText', 'AsciiPieces/Cristina Heading.txt', 3, startBirthdayText);
         }
         
         function startBirthdayText() {
-            currentPhase = 'birthday';
-            birthdayDiv.style.color = 'white';
-            birthdayDiv.style.textShadow = 'none';
-            
-            const lines = birthdayText.split('\n');
-            let lineIndex = 0;
-            
-            function typeLine() {
-                if (lineIndex < lines.length) {
-                    if (lineIndex > 0) {
-                        birthdayDiv.textContent += '\n';
-                    }
-                    birthdayDiv.textContent += lines[lineIndex];
-                    lineIndex++;
-                    setTimeout(typeLine, 200); // 200ms between lines
+            loadAndAnimateAscii('AsciiPieces/30yoBby.txt', 'birthdayText', {
+                charAnimation: 'line',
+                lineDelay: 150,
+                autoScroll: true,
+                onComplete: startLayeredArt
+            });
+        }
+
+        function startLayeredArt() {
+            // Hide previous sections and show the new one
+            document.getElementById('headingSection').style.display = 'none';
+            const layeredArtSection = document.getElementById('layeredArtSection');
+            layeredArtSection.style.display = 'flex'; // Make it visible
+
+            loadAndAnimateAscii('AsciiPieces/smolPython.txt', 'python-art', {
+                charAnimation: 'line',
+                lineDelay: 50,
+                autoScroll: true
+            });
+
+            // Load the overlay art simultaneously
+            loadAndAnimateAscii('AsciiPieces/30yoBby.txt', 'bday-art-overlay', {
+                charAnimation: 'line',
+                lineDelay: 50,
+                autoScroll: true
+            });
+        }
+
+        function startSaturnArt() {
+            loadAndAnimateAscii('AsciiPieces/Saturn.txt', 'saturn-art', {
+                charAnimation: 'line',
+                lineDelay: 50,
+                onComplete: showContinueButton
+            });
+        }
+
+        // Initial call to start the animation
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let animationsCompleted = 0;
+            const totalAnimations = 2;
+
+            function onAnimationComplete() {
+                animationsCompleted++;
+                if (animationsCompleted === totalAnimations) {
+                    showContinueButton();
                 }
             }
-            
-            typeLine();
-        }
-        
-        // Start the sequence immediately when page loads
-        typeSaturnChar();
+
+            loadAndAnimateAscii('AsciiPieces/Saturn Returns Poem.txt', 'typewriter', {
+                charAnimation: 'char',
+                charSpeed: 25,
+                onComplete: onAnimationComplete
+            });
+
+            loadAndAnimateAscii('AsciiPieces/indrasNet.txt', 'indras-net-art', {
+                charAnimation: 'line',
+                lineDelay: 150,
+                onComplete: onAnimationComplete
+            });
+        });
+
     </script>
 </body>
 </html> 
