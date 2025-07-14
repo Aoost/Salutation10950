@@ -81,13 +81,7 @@
         }
 
         .poem-container {
-            flex-basis: 48%; /* Give slightly less than half */
-            padding-right: 2%;
-        }
-
-        .indras-net-container {
-            flex-basis: 48%; /* Give slightly less than half */
-            padding-left: 2%;
+            flex-basis: 100%;
         }
         
         .typewriter-container {
@@ -157,7 +151,19 @@
             text-align: left;
             margin-top: 20px;
         }
-        
+
+        .typewriter-text.exaltation-art {
+            font-size: 0.6vw; /* 5px base */
+            color: #FF69B4; /* Pink */
+            text-shadow: 0 0 5px #FF69B4, 0 0 10px #FF69B4;
+        }
+
+        .typewriter-text.with-love-art {
+            font-size: 0.4vw;
+            color: #FFC0CB; /* Lighter Pink */
+            text-shadow: 0 0 5px #FFC0CB;
+        }
+
         /* Subtle glow effect */
         .glow {
             text-shadow: 
@@ -192,6 +198,11 @@
             transform: translateX(-50%) scale(1.1);
             box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
         }
+
+        .continue-button.pink {
+            color: #FF69B4;
+            border-color: #FF69B4;
+        }
     </style>
 </head>
 <body>
@@ -201,9 +212,6 @@
             <div class="typewriter-container poem-container">
                 <div class="typewriter-text poem" id="typewriter"></div>
                 <span class="cursor" id="cursor">_</span>
-            </div>
-            <div class="typewriter-container indras-net-container">
-                <div class="typewriter-text indras-net-art" id="indras-net-art"></div>
             </div>
         </div>
         <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
@@ -226,12 +234,22 @@
         </div>
     </div>
 
+    <!-- Section 5: Exaltation Art -->
+    <div class="section later-sections" id="exaltationSection" style="display: none;">
+        <div class="typewriter-container">
+            <div class="typewriter-text exaltation-art" id="exaltationText"></div>
+            <div class="typewriter-text with-love-art" id="withLoveText" style="margin-top: 20px;"></div>
+        </div>
+        <button id="continueBtn3" class="continue-button pink" style="display: none;">↓</button>
+    </div>
+
     <script>
         const typewriter = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
         const continueBtn = document.getElementById('continueBtn');
         const headingText = document.getElementById('headingText');
         const birthdayDiv = document.getElementById('birthdayText');
+        const continueBtn3 = document.getElementById('continueBtn3');
         
         let currentPhase = 'saturn';
         let activeSkippers = [];
@@ -440,6 +458,14 @@
             });
         }
 
+        function showContinueButton3() {
+            continueBtn3.style.display = 'block';
+            continueBtn3.addEventListener('click', function() {
+                continueBtn3.style.display = 'none';
+                startWithLoveArt();
+            });
+        }
+
         function startCristinaFlash() {
             flashAscii('headingText', 'AsciiPieces/Cristina Heading.txt', 3, startLayeredArt);
         }
@@ -455,20 +481,46 @@
 
         function startLayeredArt() {
             // Hide previous sections and show the new one
-            // document.getElementById('headingSection').style.display = 'none';
+            document.getElementById('headingText').style.display = 'none';
             const layeredArtSection = document.getElementById('layeredArtSection');
             layeredArtSection.style.display = 'flex'; // Make it visible
 
             loadAndAnimateAscii('AsciiPieces/smolPython.txt', 'python-art', {
                 charAnimation: 'line',
                 lineDelay: 50,
-                autoScroll: true
+                autoScroll: true,
+                onComplete: startExaltationArt
             });
 
             // Load the overlay art simultaneously
             loadAndAnimateAscii('AsciiPieces/30yoBby.txt', 'bday-art-overlay', {
                 charAnimation: 'line',
                 lineDelay: 50,
+                autoScroll: true
+            });
+        }
+
+        function startExaltationArt() {
+            // Wait a moment before hiding the previous sections
+            setTimeout(() => {
+                document.getElementById('headingSection').style.display = 'none';
+                document.getElementById('layeredArtSection').style.display = 'none';
+                const exaltationSection = document.getElementById('exaltationSection');
+                exaltationSection.style.display = 'flex'; // Make it visible
+            }, 2000); // 2 second delay
+
+            loadAndAnimateAscii('ExaltationMeditationVocationExplorationRespiration.txt', 'exaltationText', {
+                charAnimation: 'line',
+                lineDelay: 100,
+                autoScroll: true,
+                onComplete: showContinueButton3
+            });
+        }
+
+        function startWithLoveArt() {
+            loadAndAnimateAscii('AsciiPieces/Withlove.txt', 'withLoveText', {
+                charAnimation: 'line',
+                lineDelay: 100,
                 autoScroll: true
             });
         }
@@ -484,26 +536,10 @@
         // Initial call to start the animation
         document.addEventListener('DOMContentLoaded', (event) => {
             window.scrollTo(0, 0);
-            let animationsCompleted = 0;
-            const totalAnimations = 2;
-
-            function onAnimationComplete() {
-                animationsCompleted++;
-                if (animationsCompleted === totalAnimations) {
-                    showContinueButton();
-                }
-            }
-
             loadAndAnimateAscii('AsciiPieces/Saturn Returns Poem.txt', 'typewriter', {
                 charAnimation: 'char',
                 charSpeed: 25,
-                onComplete: onAnimationComplete
-            });
-
-            loadAndAnimateAscii('AsciiPieces/indrasNet.txt', 'indras-net-art', {
-                charAnimation: 'line',
-                lineDelay: 150,
-                onComplete: onAnimationComplete
+                onComplete: showContinueButton
             });
         });
 
