@@ -256,6 +256,10 @@
         </div>
     </div>
 
+    <!-- Audio Elements -->
+    <audio id="typing-sound" src="sounds/typing.wav" preload="auto"></audio>
+    <audio id="alarm-sound" src="sounds/alarm.mp3" preload="auto"></audio>
+
     <script>
         const typewriter = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
@@ -354,6 +358,16 @@
                                 if (autoScroll) {
                                     typewriterElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
                                 }
+                                
+                                // Play sound if specified
+                                if (options.soundId) {
+                                    const sound = document.getElementById(options.soundId);
+                                    if (sound) {
+                                        sound.currentTime = 0;
+                                        sound.play().catch(e => {}); // Catch errors for autoplay policy
+                                    }
+                                }
+
                                 charIndex++;
                                 timeoutId = setTimeout(type, charSpeed);
                             } else {
@@ -407,7 +421,13 @@
          */
         async function flashAscii(elementId, filePath, times, onComplete) {
             const element = document.getElementById(elementId);
+            const sound = document.getElementById('alarm-sound');
+
             try {
+                if (sound) {
+                    sound.loop = true;
+                    sound.play().catch(e => {});
+                }
                 const response = await fetch(filePath);
                 const text = await response.text();
                 
@@ -439,6 +459,7 @@
                         flashCount++;
                         timeoutId = setTimeout(flash, 300);
                     } else {
+                        if (sound) sound.pause();
                         completed = true;
                         element.style.visibility = 'visible';
                         element.innerHTML = text; // Ensure it's visible at the end
@@ -548,7 +569,7 @@
         }
 
         function startExaltationArt() {
-            loadAndAnimateAscii('ExaltationMeditationVocationExplorationRespiration.txt', 'exaltationText', {
+            loadAndAnimateAscii('AsciiPieces/ExaltationMeditationVocationExplorationRespiration.txt', 'exaltationText', {
                 charAnimation: 'line',
                 lineDelay: 100,
                 autoScroll: true,
@@ -571,6 +592,7 @@
                 charAnimation: 'char',
                 charSpeed: 25,
                 autoScroll: true,
+                soundId: 'typing-sound',
                 onComplete: showContinueButton
             });
         });
