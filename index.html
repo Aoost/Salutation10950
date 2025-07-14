@@ -52,12 +52,12 @@
         .side-by-side-container {
             display: flex;
             justify-content: space-between; /* Change to space-between */
-            align-items: flex-start;
+            align-items: center;
             width: 100%;
         }
 
         .poem-container {
-            flex-basis: 100%;
+            flex-basis: 50%;
         }
         
         .typewriter-container {
@@ -176,8 +176,8 @@
         }
 
         .spinning-art-container {
-            width: 500px;
-            height: 500px;
+            width: 400px;
+            height: 400px;
             border-radius: 50%;
             overflow: hidden;
             display: flex;
@@ -209,12 +209,17 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- Section 1: Saturn Poem -->
+        <!-- Section 1: Saturn Poem & Spinning Art -->
         <div class="section" id="poemSection">
             <div class="side-by-side-container">
                 <div class="typewriter-container poem-container">
                     <div class="typewriter-text poem" id="typewriter"></div>
                     <span class="cursor" id="cursor">_</span>
+                </div>
+                <div id="spinningArtContainerBesidePoem" style="display: none; flex-basis: 50%; justify-content: center; align-items: center;">
+                    <div class="spinning-art-container">
+                        <pre id="indrasNetArt" class="ascii-art"></pre>
+                    </div>
                 </div>
             </div>
             <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
@@ -238,14 +243,6 @@
             <button id="continueBtn2" class="continue-button green" style="display: none;">↓</button>
         </div>
 
-        <!-- Spinning Indra's Net Section -->
-        <div class="section" id="spinningArtSection" style="display: none; justify-content: center; align-items: center;">
-            <div class="spinning-art-container">
-                <pre id="indrasNetArt" class="ascii-art"></pre>
-            </div>
-            <button id="continueBtn3" class="continue-button" style="display: none;">↓</button>
-        </div>
-
         <!-- Section 5: Exaltation Art -->
         <div class="section later-sections" id="exaltationSection">
             <div class="typewriter-container">
@@ -267,7 +264,6 @@
         const headingText = document.getElementById('headingText');
         const birthdayDiv = document.getElementById('birthdayText');
         const continueBtn2 = document.getElementById('continueBtn2');
-        const continueBtn3 = document.getElementById('continueBtn3');
         const continueBtn4 = document.getElementById('continueBtn4');
         
         let currentPhase = 'saturn';
@@ -493,21 +489,10 @@
             continueBtn2.style.display = 'block';
             continueBtn2.addEventListener('click', function() {
                 continueBtn2.style.display = 'none';
-                const spinningSection = document.getElementById('spinningArtSection');
-                spinningSection.style.display = 'flex'; // Make it visible first
-                spinningSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                setTimeout(startSpinningIndrasNet, 500); // then start animation
-            });
-        }
-        
-        function showContinueButton3() {
-            continueBtn3.style.display = 'block';
-            continueBtn3.addEventListener('click', function() {
-                continueBtn3.style.display = 'none';
                 startExaltationArt();
             });
         }
-
+        
         function showContinueButton4() {
             continueBtn4.style.display = 'block';
             continueBtn4.addEventListener('click', function() {
@@ -559,12 +544,14 @@
             });
         }
 
-        function startSpinningIndrasNet() {
+        function startIndraNetNextToPoem() {
+            const spinningArt = document.getElementById('spinningArtContainerBesidePoem');
+            spinningArt.style.display = 'flex';
             loadAndAnimateAscii('AsciiPieces/indrasNet.txt', 'indrasNetArt', {
-                charAnimation: 'line', // Still "animating" line-by-line for effect
+                charAnimation: 'line',
                 lineDelay: 5,
-                autoScroll: false, // No scroll needed for this one
-                onComplete: showContinueButton3
+                autoScroll: false,
+                onComplete: showContinueButton
             });
         }
 
@@ -593,7 +580,7 @@
                 charSpeed: 25,
                 autoScroll: true,
                 soundId: 'typing-sound',
-                onComplete: showContinueButton
+                onComplete: startIndraNetNextToPoem
             });
         });
 
