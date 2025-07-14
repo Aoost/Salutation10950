@@ -110,12 +110,12 @@
             color: white;
             text-shadow: none;
         }
-        
+
         .typewriter-text.heading {
             font-size: 0.83vw; /* 10px base */
             text-align: left;
         }
-        
+
         .typewriter-text.birthday {
             font-size: 0.67vw; /* 8px base */
             text-align: left;
@@ -175,6 +175,27 @@
             box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
         }
 
+        .spinning-art-container {
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: spin 20s linear infinite;
+        }
+
+        .spinning-art-container .ascii-art {
+            color: white;
+            font-size: 8px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .continue-button.green {
             color: #00ff41;
             border-color: #00ff41;
@@ -217,13 +238,21 @@
             <button id="continueBtn2" class="continue-button green" style="display: none;">↓</button>
         </div>
 
+        <!-- Spinning Indra's Net Section -->
+        <div class="section" id="spinningArtSection" style="display: none; justify-content: center; align-items: center;">
+            <div class="spinning-art-container">
+                <pre id="indrasNetArt" class="ascii-art"></pre>
+            </div>
+            <button id="continueBtn3" class="continue-button" style="display: none;">↓</button>
+        </div>
+
         <!-- Section 5: Exaltation Art -->
         <div class="section later-sections" id="exaltationSection">
             <div class="typewriter-container">
                 <div class="typewriter-text exaltation-art" id="exaltationText"></div>
                 <div class="typewriter-text with-love-art" id="withLoveText" style="margin-top: 20px;"></div>
             </div>
-            <button id="continueBtn3" class="continue-button pink" style="display: none;">↓</button>
+            <button id="continueBtn4" class="continue-button pink" style="display: none;">↓</button>
         </div>
     </div>
 
@@ -235,6 +264,7 @@
         const birthdayDiv = document.getElementById('birthdayText');
         const continueBtn2 = document.getElementById('continueBtn2');
         const continueBtn3 = document.getElementById('continueBtn3');
+        const continueBtn4 = document.getElementById('continueBtn4');
         
         let currentPhase = 'saturn';
         let activeSkippers = [];
@@ -431,7 +461,10 @@
             continueBtn.style.display = 'block';
             continueBtn.addEventListener('click', function() {
                 continueBtn.style.display = 'none';
-                startCristinaFlash();
+                const headingSection = document.getElementById('headingSection');
+                headingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Wait for scroll to be noticeable before starting flash
+                setTimeout(startCristinaFlash, 500);
             });
         }
 
@@ -439,7 +472,10 @@
             continueBtn2.style.display = 'block';
             continueBtn2.addEventListener('click', function() {
                 continueBtn2.style.display = 'none';
-                startExaltationArt();
+                const spinningSection = document.getElementById('spinningArtSection');
+                spinningSection.style.display = 'flex'; // Make it visible first
+                spinningSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(startSpinningIndrasNet, 500); // then start animation
             });
         }
         
@@ -447,6 +483,14 @@
             continueBtn3.style.display = 'block';
             continueBtn3.addEventListener('click', function() {
                 continueBtn3.style.display = 'none';
+                startExaltationArt();
+            });
+        }
+
+        function showContinueButton4() {
+            continueBtn4.style.display = 'block';
+            continueBtn4.addEventListener('click', function() {
+                continueBtn4.style.display = 'none';
                 startWithLoveArt();
             });
         }
@@ -494,12 +538,21 @@
             });
         }
 
+        function startSpinningIndrasNet() {
+            loadAndAnimateAscii('AsciiPieces/indrasNet.txt', 'indrasNetArt', {
+                charAnimation: 'line', // Still "animating" line-by-line for effect
+                lineDelay: 5,
+                autoScroll: false, // No scroll needed for this one
+                onComplete: showContinueButton3
+            });
+        }
+
         function startExaltationArt() {
             loadAndAnimateAscii('ExaltationMeditationVocationExplorationRespiration.txt', 'exaltationText', {
                 charAnimation: 'line',
                 lineDelay: 100,
                 autoScroll: true,
-                onComplete: showContinueButton3
+                onComplete: showContinueButton4
             });
         }
 
