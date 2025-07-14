@@ -11,41 +11,17 @@
             background-color: #000;
             color: #00ff41;
             font-family: 'Courier New', monospace;
-            overflow: hidden;
-            height: 100vh;
+            overflow-y: auto; /* Allow vertical scrolling */
+            height: 100%;
         }
         
         .section {
-            position: absolute;
             width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: left;
-            justify-content: left;
             padding: 20px;
-            top: 0;
-            left: 0;
-            transition: transform 0.8s ease-in-out;
+            box-sizing: border-box; /* Include padding in width calculation */
         }
         
-        #poemSection {
-            transform: translateY(0);
-        }
-        
-        #poemSection.slide-up {
-            transform: translateY(-100vh);
-        }
-        
-        #headingSection {
-            transform: translateY(100vh);
-        }
-        
-        #headingSection.active {
-            transform: translateY(0);
-        }
-
         #layeredArtSection {
-            display: none; /* Hidden by default */
             position: relative;
         }
 
@@ -199,6 +175,11 @@
             box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
         }
 
+        .continue-button.green {
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
         .continue-button.pink {
             color: #FF69B4;
             border-color: #FF69B4;
@@ -206,41 +187,44 @@
     </style>
 </head>
 <body>
-    <!-- Section 1: Saturn Poem -->
-    <div class="section" id="poemSection">
-        <div class="side-by-side-container">
-            <div class="typewriter-container poem-container">
-                <div class="typewriter-text poem" id="typewriter"></div>
-                <span class="cursor" id="cursor">_</span>
+    <div class="main-container">
+        <!-- Section 1: Saturn Poem -->
+        <div class="section" id="poemSection">
+            <div class="side-by-side-container">
+                <div class="typewriter-container poem-container">
+                    <div class="typewriter-text poem" id="typewriter"></div>
+                    <span class="cursor" id="cursor">_</span>
+                </div>
+            </div>
+            <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
+        </div>
+
+        <!-- Section 2: Cristina Heading & Birthday Text -->
+        <div class="section later-sections" id="headingSection">
+            <div class="typewriter-container">
+                <div class="typewriter-text heading" id="headingText"></div>
+                <div class="typewriter-text birthday" id="birthdayText" style="margin-top: 20px;"></div>
+                <div class="typewriter-text python" id="pythonText" style="margin-top: 20px;"></div>
             </div>
         </div>
-        <button id="continueBtn" class="continue-button" style="display: none;">↓</button>
-    </div>
 
-    <!-- Section 2: Cristina Heading & Birthday Text -->
-    <div class="section later-sections" id="headingSection">
-        <div class="typewriter-container">
-            <div class="typewriter-text heading" id="headingText"></div>
-            <div class="typewriter-text birthday" id="birthdayText" style="margin-top: 20px;"></div>
-            <div class="typewriter-text python" id="pythonText" style="margin-top: 20px;"></div>
+        <!-- Section 3: Layered ASCII Art -->
+        <div class="section later-sections" id="layeredArtSection">
+            <div class="layered-art-container">
+                <div id="python-art" class="python-base"></div>
+                <div id="bday-art-overlay" class="bday-overlay"></div>
+            </div>
+            <button id="continueBtn2" class="continue-button green" style="display: none;">↓</button>
         </div>
-    </div>
 
-    <!-- Section 3: Layered ASCII Art -->
-    <div class="section later-sections" id="layeredArtSection">
-        <div class="layered-art-container">
-            <div id="python-art" class="python-base"></div>
-            <div id="bday-art-overlay" class="bday-overlay"></div>
+        <!-- Section 5: Exaltation Art -->
+        <div class="section later-sections" id="exaltationSection">
+            <div class="typewriter-container">
+                <div class="typewriter-text exaltation-art" id="exaltationText"></div>
+                <div class="typewriter-text with-love-art" id="withLoveText" style="margin-top: 20px;"></div>
+            </div>
+            <button id="continueBtn3" class="continue-button pink" style="display: none;">↓</button>
         </div>
-    </div>
-
-    <!-- Section 5: Exaltation Art -->
-    <div class="section later-sections" id="exaltationSection" style="display: none;">
-        <div class="typewriter-container">
-            <div class="typewriter-text exaltation-art" id="exaltationText"></div>
-            <div class="typewriter-text with-love-art" id="withLoveText" style="margin-top: 20px;"></div>
-        </div>
-        <button id="continueBtn3" class="continue-button pink" style="display: none;">↓</button>
     </div>
 
     <script>
@@ -249,6 +233,7 @@
         const continueBtn = document.getElementById('continueBtn');
         const headingText = document.getElementById('headingText');
         const birthdayDiv = document.getElementById('birthdayText');
+        const continueBtn2 = document.getElementById('continueBtn2');
         const continueBtn3 = document.getElementById('continueBtn3');
         
         let currentPhase = 'saturn';
@@ -444,20 +429,20 @@
         function showContinueButton() {
             cursor.style.display = 'none';
             continueBtn.style.display = 'block';
-            // Add click event listener to button
             continueBtn.addEventListener('click', function() {
                 continueBtn.style.display = 'none';
-                // Slide the poem section up and out of view
-                document.getElementById('poemSection').classList.add('slide-up');
-                
-                // Animate to heading section
-                setTimeout(() => {
-                    document.getElementById('headingSection').classList.add('active');
-                    startCristinaFlash();
-                }, 800); // Wait for slide up transition to finish
+                startCristinaFlash();
             });
         }
 
+        function showContinueButton2() {
+            continueBtn2.style.display = 'block';
+            continueBtn2.addEventListener('click', function() {
+                continueBtn2.style.display = 'none';
+                startExaltationArt();
+            });
+        }
+        
         function showContinueButton3() {
             continueBtn3.style.display = 'block';
             continueBtn3.addEventListener('click', function() {
@@ -480,35 +465,36 @@
         }
 
         function startLayeredArt() {
-            // Hide previous sections and show the new one
-            document.getElementById('headingText').style.display = 'none';
-            const layeredArtSection = document.getElementById('layeredArtSection');
-            layeredArtSection.style.display = 'flex'; // Make it visible
+            let animationsCompleted = 0;
+            const totalAnimations = 2;
+
+            function onAnimationComplete() {
+                animationsCompleted++;
+                if (animationsCompleted === totalAnimations) {
+                    const artContainer = document.querySelector('.layered-art-container');
+                    const pythonArt = document.getElementById('python-art');
+                    artContainer.style.height = pythonArt.offsetHeight + 'px';
+                    showContinueButton2();
+                }
+            }
 
             loadAndAnimateAscii('AsciiPieces/smolPython.txt', 'python-art', {
                 charAnimation: 'line',
                 lineDelay: 50,
                 autoScroll: true,
-                onComplete: startExaltationArt
+                onComplete: onAnimationComplete
             });
 
             // Load the overlay art simultaneously
             loadAndAnimateAscii('AsciiPieces/30yoBby.txt', 'bday-art-overlay', {
                 charAnimation: 'line',
                 lineDelay: 50,
-                autoScroll: true
+                autoScroll: true,
+                onComplete: onAnimationComplete
             });
         }
 
         function startExaltationArt() {
-            // Wait a moment before hiding the previous sections
-            setTimeout(() => {
-                document.getElementById('headingSection').style.display = 'none';
-                document.getElementById('layeredArtSection').style.display = 'none';
-                const exaltationSection = document.getElementById('exaltationSection');
-                exaltationSection.style.display = 'flex'; // Make it visible
-            }, 2000); // 2 second delay
-
             loadAndAnimateAscii('ExaltationMeditationVocationExplorationRespiration.txt', 'exaltationText', {
                 charAnimation: 'line',
                 lineDelay: 100,
@@ -525,20 +511,13 @@
             });
         }
 
-        function startSaturnArt() {
-            loadAndAnimateAscii('AsciiPieces/Saturn.txt', 'saturn-art', {
-                charAnimation: 'line',
-                lineDelay: 50,
-                onComplete: showContinueButton
-            });
-        }
-
         // Initial call to start the animation
         document.addEventListener('DOMContentLoaded', (event) => {
             window.scrollTo(0, 0);
             loadAndAnimateAscii('AsciiPieces/Saturn Returns Poem.txt', 'typewriter', {
                 charAnimation: 'char',
                 charSpeed: 25,
+                autoScroll: true,
                 onComplete: showContinueButton
             });
         });
