@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sun Salutation 10950 </title>
-    <style>
+ß    <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #000;
-            color: #00ff41;
+            color: #dddedd;
             font-family: 'Courier New', monospace;
             overflow-y: auto; /* Allow vertical scrolling */
             height: 100%;
@@ -38,7 +38,8 @@
         }
 
         #python-art {
-            font-size: 0.58vw; /* 7px base */
+            font-size: 0.6vw; /* 7px base */
+            font-color: white;
         }
 
         #bday-art-overlay {
@@ -46,7 +47,8 @@
             /* Initial positioning guess */
             top: 50px; 
             left: 150px;
-            color: white; /* Make it stand out */
+            color: rgb(246, 193, 4); /* Make it stand out */
+            text-shadow: 0 0 5px #fafafa;
         }
         
         .side-by-side-container {
@@ -87,7 +89,7 @@
         
         .cursor {
             animation: blink 1s infinite;
-            color: #00ff41;
+            color: #ffffff;
         }
         
         @keyframes blink {
@@ -96,18 +98,19 @@
         }
         
         .typewriter-text {
-            color: #00ff41;
-            text-shadow: 0 0 5px #00ff41;
+            color: #f9faf9;
+            text-shadow: 0 0 5px #fafafa;
             font-size: 1.17vw; /* 14px base */
         }
         
         .typewriter-text.poem {
             font-size: 14px; /* User preference */
+            color: rgb(243, 205, 11);
         }
         
         .typewriter-text.indras-net-art {
             font-size: 0.75vw; /* Adjusted for better fit */
-            color: white;
+            color: rgb(211, 75, 241);
             text-shadow: none;
         }
 
@@ -117,9 +120,10 @@
         }
 
         .typewriter-text.birthday {
-            font-size: 0.67vw; /* 8px base */
+            font-size: 0.8vw; /* 8px base */
             text-align: left;
             margin-top: 20px;
+            color: rgb(221, 3, 255);
         }
         
         .typewriter-text.python {
@@ -141,12 +145,12 @@
         }
 
         /* Subtle glow effect */
-        .glow {
+        /* .glow {
             text-shadow: 
                 0 0 5px #00ff41,
                 0 0 10px #00ff41,
                 0 0 15px #00ff41;
-        }
+        } */
         
         /* Continue button styling */
         .continue-button {
@@ -159,7 +163,7 @@
             border-radius: 50%;
             background: transparent;
             border: 1px solid white;
-            color: #00ff41;
+            color: #f6f6f6;
             font-size: 24px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -197,8 +201,8 @@
         }
 
         .continue-button.green {
-            color: #00ff41;
-            border-color: #00ff41;
+            color: #ffffff;
+            border-color: #ffffff;
         }
 
         .continue-button.pink {
