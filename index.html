@@ -144,6 +144,13 @@
             text-shadow: 0 0 5px #FFC0CB;
         }
 
+        .typewriter-text.messages-art {
+            font-size: 1.0vw;
+            color: #f8a101;
+            text-shadow: 0 0 5px #ffffff;
+            margin-top: 20px;
+        }
+
         /* Subtle glow effect */
         /* .glow {
             text-shadow: 
@@ -252,6 +259,7 @@
             <div class="typewriter-container">
                 <div class="typewriter-text exaltation-art" id="exaltationText"></div>
                 <div class="typewriter-text with-love-art" id="withLoveText" style="margin-top: 20px;"></div>
+                <div class="typewriter-text messages-art" id="messagesText"></div>
             </div>
             <button id="continueBtn4" class="continue-button pink" style="display: none;">↓</button>
         </div>
@@ -570,6 +578,15 @@
 
         function startWithLoveArt() {
             loadAndAnimateAscii('AsciiPieces/Withlove.txt', 'withLoveText', {
+                charAnimation: 'line',
+                lineDelay: 100,
+                autoScroll: true,
+                onComplete: startMessagesArt
+            });
+        }
+
+        function startMessagesArt() {
+            loadAndAnimateAscii('AsciiPieces/messages.txt', 'messagesText', {
                 charAnimation: 'line',
                 lineDelay: 100,
                 autoScroll: true
