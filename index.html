@@ -149,6 +149,7 @@
             color: #f8a101;
             text-shadow: 0 0 5px #ffffff;
             margin-top: 20px;
+           
         }
 
         /* Subtle glow effect */
@@ -262,6 +263,7 @@
                 <div class="typewriter-text messages-art" id="messagesText"></div>
             </div>
             <button id="continueBtn4" class="continue-button pink" style="display: none;">↓</button>
+            <button id="continueBtn5" class="continue-button pink" style="display: none;">↓</button>
         </div>
     </div>
 
@@ -277,6 +279,7 @@
         const birthdayDiv = document.getElementById('birthdayText');
         const continueBtn2 = document.getElementById('continueBtn2');
         const continueBtn4 = document.getElementById('continueBtn4');
+        const continueBtn5 = document.getElementById('continueBtn5');
         
         let currentPhase = 'saturn';
         let activeSkippers = [];
@@ -513,6 +516,14 @@
             });
         }
 
+        function showContinueButton5() {
+            continueBtn5.style.display = 'block';
+            continueBtn5.addEventListener('click', function() {
+                continueBtn5.style.display = 'none';
+                startMessagesArt();
+            });
+        }
+
         function startCristinaFlash() {
             flashAscii('headingText', 'AsciiPieces/Cristina Heading.txt', 3, startLayeredArt);
         }
@@ -581,14 +592,14 @@
                 charAnimation: 'line',
                 lineDelay: 100,
                 autoScroll: true,
-                onComplete: startMessagesArt
+                onComplete: showContinueButton5
             });
         }
 
         function startMessagesArt() {
             loadAndAnimateAscii('AsciiPieces/messages.txt', 'messagesText', {
-                charAnimation: 'line',
-                lineDelay: 100,
+                charAnimation: 'char',
+                charSpeed: 40,
                 autoScroll: true
             });
         }
